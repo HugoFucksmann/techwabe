@@ -1,0 +1,228 @@
+html {
+  scroll-behavior: smooth;
+  /*   scroll-snap-type: y mandatory; */
+}
+
+.navClass {
+  position: fixed;
+  bottom: 3vh;
+  z-index: 10;
+}
+
+.navClass ul {
+  display: flex;
+  list-style-type: none;
+  gap: 0rem;
+  padding: 0;
+  margin: 0;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  border-radius: 5rem;
+  z-index: -1;
+  background: hsla(0, 1%, 39%, 0.75);
+  backdrop-filter: blur(10px);
+  border-radius: 5rem;
+  /*  box-shadow: 2px 2px 4px rgb(153, 153, 153) inset; */
+  box-shadow: 4px 4px 8px rgb(124, 124, 124);
+  border: 1px solid white;
+  /*  box-shadow: 0 1px 1px 1px hsl(0 0% 100% / 0.15) inset; */
+}
+
+header {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  translate: -50%;
+  width: 80ch;
+  max-width: calc(100% - 2rem);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bear {
+  height: 36px;
+}
+
+#planes {
+  position: relative;
+}
+
+.planes-bear {
+  height: 100vh;
+  position: absolute;
+  right: 0;
+  translate: 50% 0;
+  opacity: 0.25;
+  pointer-events: none;
+  z-index: -1;
+}
+
+[href] {
+  font-weight: bold;
+  color: hsl(0 0% 100%);
+  text-decoration-line: none;
+  padding: 0.75rem 1.25rem;
+  display: inline-block;
+  animation: change linear both;
+  opacity: calc(0.5 + var(--active, 0));
+  transition: opacity 0.2s, background 0.2s;
+  border-radius: 5rem;
+}
+
+.follow {
+  padding: 0.5rem 1rem;
+  background: hsl(210 80% 60%);
+  border-radius: 5rem;
+  color: white;
+  font-weight: 400;
+  text-decoration-line: none;
+  opacity: 1;
+}
+
+[href]:is(:hover, :focus-visible) {
+  --hover: 1;
+  color: hsl(29, 75%, 16%);
+}
+
+[href] span {
+  display: inline-block;
+  transition: scale 0.2s;
+  scale: calc(1 + (var(--hover, 0) * 0.1));
+}
+
+[href="#inicio"] {
+  anchor-name: --inicio;
+  animation-timeline: --inicio-vt;
+}
+[href="#servicios"] {
+  anchor-name: --servicios;
+  animation-timeline: --servicios-vt;
+}
+[href="#proyectos"] {
+  anchor-name: --proyectos;
+  animation-timeline: --proyectos-vt;
+}
+[href="#planes"] {
+  anchor-name: --planes;
+  animation-timeline: --planes-vt;
+}
+
+[href="#contacto"] {
+  anchor-name: --contacto;
+  animation-timeline: --contacto-vt;
+}
+
+.indicator {
+  position: absolute;
+  top: anchor(--inicio top);
+  bottom: anchor(--inicio bottom);
+  border-radius: 5rem;
+  left: calc(
+    anchor(--inicio left) +
+      /* The distance between inicio left and servicios left * active state */
+      (
+        (anchor(--servicios left) - anchor(--inicio left)) *
+          var(--servicios-show, 0)
+      ) +
+      /* The distance between servicios left and work left as we already have servicios left */
+      (
+        (anchor(--proyectos left) - anchor(--servicios left)) *
+          var(--proyectos-show, 0)
+      ) + /* And so on */
+      (
+        (anchor(--planes left) - anchor(--proyectos left)) *
+          var(--planes-show, 0)
+      )
+  );
+  right: calc(
+    anchor(--inicio right) -
+      /* The distance between inicio left and servicios left * active state */
+      (
+        (anchor(--inicio right) - anchor(--servicios right)) *
+          var(--servicios-show, 0)
+      ) -
+      /* The distance between servicios left and work left as we already have servicios left */
+      (
+        (anchor(--servicios right) - anchor(--proyectos right)) *
+          var(--proyectos-show, 0)
+      ) - /* And so on */
+      (
+        (anchor(--proyectos right) - anchor(--planes right)) *
+          var(--planes-show, 0)
+      )
+  );
+  /*   width: 40px; */
+  background: hsl(0 0% 50% / 0.65);
+  backdrop-filter: blur(10px);
+  /*   mix-blend-mode: difference; */
+  transition: all 0.2s linear;
+  z-index: -1;
+}
+
+.indicator-bar {
+  animation: indicate-servicios, indicate-proyectos, indicate-planes;
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+  animation-timeline: --servicios-vt, --proyectos-vt, --planes-vt;
+  animation-range: entry;
+}
+
+.photo-grid {
+  display: grid;
+  grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr;
+  width: 100vw;
+  gap: 4px;
+}
+
+.photo-grid > div {
+}
+
+.photo-grid img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+#proyectos {
+  display: block;
+}
+
+form {
+  padding: 1rem;
+  text-align: center;
+}
+
+form p:first-of-type {
+  font-size: clamp(1rem, 1vw + 1rem, 4rem);
+}
+form p:last-of-type {
+  font-size: 0.875rem;
+  font-weight: 300;
+}
+
+form div {
+  display: flex;
+}
+
+#servicios {
+  align-content: center;
+}
+
+form input {
+  flex: 1;
+  padding: 1rem;
+  border-radius: 5rem 0 0 5rem;
+  border: 0;
+}
+
+form button {
+  border: 0;
+  border-radius: 0 5rem 5rem 0;
+  padding: 1rem;
+  background: hsl(210 80% 60%);
+  color: white;
+}
