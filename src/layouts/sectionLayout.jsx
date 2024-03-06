@@ -7,7 +7,7 @@ const SectionLayout = (props) => {
         display: "flex",
         flexDirection: "column",
         height: "100vh",
-        //  backgroundColor: "#e7e5e4",
+
         backgroundColor: "#ebebeb",
       }}
     >

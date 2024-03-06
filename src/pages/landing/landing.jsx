@@ -3,6 +3,9 @@ import SectionLayout from "../../layouts/sectionLayout";
 import "./landing.css";
 import NeumorphicButtonsComponent from "./buttonsHome";
 import ScrollAnimation from "react-animate-on-scroll";
+import ImgMove from "./imgMove";
+import AnimatedText from "./textWrite";
+
 const Landing = () => {
   const styles = {
     innershadow: {
@@ -20,6 +23,8 @@ const Landing = () => {
 
   return (
     <SectionLayout section={"inicio"}>
+      {/*  <ImgMove /> */}
+      {/*  <AnimatedText /> */}
       <div
         style={{
           display: "flex",

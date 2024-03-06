@@ -6,7 +6,7 @@ html {
 .navClass {
   position: fixed;
   bottom: 3vh;
-  z-index: 10;
+  z-index: 9999;
 }
 
 .navClass ul {
